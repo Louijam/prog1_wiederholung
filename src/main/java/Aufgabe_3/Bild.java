@@ -61,6 +61,7 @@ public class Bild {
                 if (bild[i][j] != 1 && bild[i][j] != 0){
                     return true;
                 }
+
             }
         }
         return false;

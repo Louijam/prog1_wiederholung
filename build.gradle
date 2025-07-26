@@ -17,3 +17,13 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+// UTF-8 Encoding für Kompilierung
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+// UTF-8 Encoding für Ausführung (z.B. gradle run)
+tasks.withType(JavaExec).configureEach {
+    jvmArgs = ['-Dfile.encoding=UTF-8']
+}

@@ -7,10 +7,31 @@ public class Main {
 
        // testEinkaufswagen();
 
-        testTextanalyse();
+        //testTextanalyse();
 
+        testZoom();
 
     }
+    public static void testZoom(){
+        int [][] bild={
+                {1,0},
+                {0,2},
+        };
+
+
+        Zoom zoom=new Zoom(bild);
+    bild=zoom.zoom(3);
+
+    for(int i=0;i<bild.length;i++){
+        for(int j=0;j<bild[i].length;j++){
+            System.out.print(bild[i][j]+" ");
+        }
+        System.out.println();
+    }
+    }
+
+
+
     public static void testTextanalyse(){
 
         String text="Ich liebe Java, weil Java die schönste Sprache der der ganzen Welt ist. ";

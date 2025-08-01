@@ -1,2 +1,6 @@
 rootProject.name = 'Programmieren_1_wiederholung'
+include 'src:main:untitled'
+findProject(':src:main:untitled')?.name = 'untitled'
+include 'src:main:Aufgabe_1'
+findProject(':src:main:Aufgabe_1')?.name = 'Aufgabe_1'
 

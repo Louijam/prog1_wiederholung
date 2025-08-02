@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'application'
 }
 
 group = 'org.example'
@@ -10,20 +11,25 @@ repositories {
 }
 
 dependencies {
+    implementation fileTree(dir: 'libs/lwjgl-2.9.3', include: ['*.jar'])
+    implementation fileTree(dir: 'libs/slick', include: ['*.jar'])
     testImplementation platform('org.junit:junit-bom:5.10.0')
     testImplementation 'org.junit.jupiter:junit-jupiter'
 }
 
-test {
-    useJUnitPlatform()
+application {
+    mainClass = 'Aufgabe_7.MyFirstGame'
+}
+
+// JVM-Argumente für 'run' Task setzen
+tasks.named('run') {
+    jvmArgs = [
+            "-Djava.library.path=libs/lwjgl-2.9.3/native/windows",
+            "-Dfile.encoding=UTF-8"
+    ]
 }
 
 // UTF-8 Encoding für Kompilierung
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
-}
-
-// UTF-8 Encoding für Ausführung (z.B. gradle run)
-tasks.withType(JavaExec).configureEach {
-    jvmArgs = ['-Dfile.encoding=UTF-8']
 }

@@ -15,7 +15,7 @@ public class Main {
         Bild bild=new Bild();
 
         try{
-            bild.leseBild("Aufgabe_6/java.pgm");
+            bild.leseBild("java.pgm");
         }
         catch(IOException e){
             System.out.println("Fehler beim einlesen der Datei");
@@ -30,7 +30,7 @@ public class Main {
         bild.printBild();
 
         try {
-            bild.schreibeBild("src/resources/Verzeichnis");
+            bild.schreibeBild("src/main/resources/Verzeichnis");
         }
         catch(IOException e){
             System.out.println("Fehler beim Schreiben der Datei");

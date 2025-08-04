@@ -7,11 +7,12 @@ public class Player {
     private float positionX;
     private float positionY;
     private Image image;
+    private boolean notFlipped = true;
 
 
     public Player(float startPositionX, float startPositionY, String bild) throws SlickException {
-        float zoom=(float)1.2;
-        this.image = new org.newdawn.slick.Image(bild).getScaledCopy(zoom);
+
+        this.image = new org.newdawn.slick.Image(bild);
         this.positionX = startPositionX;
         this.positionY = startPositionY-image.getHeight();
 
@@ -19,11 +20,25 @@ public class Player {
 
     }
 
+
     public float getPositionX() {
         return positionX;
     }
     public void setPositionX(float positionX) {
+        if(this.positionX<positionX&&notFlipped){
+            notFlipped=false;
+            this.image=image.getFlippedCopy(true,false);
+        }
+
+
+        else if(this.positionX>positionX&&!notFlipped){
+            notFlipped=true;
+            this.image=image.getFlippedCopy(true,false);
+
+        }
         this.positionX = positionX;
+
+
     }
 
     public float getPositionY() {

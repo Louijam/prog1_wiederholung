@@ -62,10 +62,12 @@ public class MyFirstGame extends BasicGame {
 			System.exit(0);
 		}
 		if (this.input.isKeyDown(Input.KEY_LEFT)){
+			if(player.getPositionX()>(0))
 			player.setPositionX(player.getPositionX()-10);
 		}
 		if (this.input.isKeyDown(Input.KEY_RIGHT)){
 
+			if (player.getPositionX()<(WIDTH-player.getWidth()-1))
 			player.setPositionX(player.getPositionX()+10);
 		}
 	}

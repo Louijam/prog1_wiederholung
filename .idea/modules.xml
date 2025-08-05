@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Programmieren_1_wiederholung.iml" filepath="$PROJECT_DIR$/.idea/modules/Programmieren_1_wiederholung.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Programmieren_1_wiederholung.main.iml" filepath="$PROJECT_DIR$/.idea/modules/Programmieren_1_wiederholung.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/myGame/myGame.iml" filepath="$PROJECT_DIR$/myGame/myGame.iml" />
     </modules>
   </component>

@@ -4,6 +4,7 @@
  * ------------------------------------------------------------------------------* **/
 
 
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -14,7 +15,7 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.Color;
+
 
 
 // class 
@@ -28,9 +29,17 @@ public class MyFirstGame extends BasicGame {
 
 	private Input input;
 
-	private Image background;
-	private Player player;
 	private int score;
+
+
+    private Image background;
+	private Player player;
+	private final ArrayList<Ball> balls=new ArrayList<>();
+
+	private int spawnCooldown=1000;
+	private int timeSinceLastSpawn=0;
+	private int maxBalls=10;
+
 
 
 
@@ -49,7 +58,8 @@ public class MyFirstGame extends BasicGame {
 
 		this.background = new Image("background.png").getScaledCopy(WIDTH, HEIGHT);
 
-		this.player=new Player(WIDTH/2,HEIGHT,"spieler.png");
+		this.player=new Player(WIDTH,HEIGHT,"spieler.png");
+
 
 	}
 
@@ -57,33 +67,81 @@ public class MyFirstGame extends BasicGame {
 	// udpate game logic
 	@Override
 	public void update(GameContainer gc, int i) throws SlickException {
-		// exit game
-		if (this.input.isKeyPressed(Input.KEY_ESCAPE)) {
-			System.exit(0);
-		}
-		if (this.input.isKeyDown(Input.KEY_LEFT)){
-			if(player.getPositionX()>(0))
-			player.setPositionX(player.getPositionX()-10);
-		}
-		if (this.input.isKeyDown(Input.KEY_RIGHT)){
 
-			if (player.getPositionX()<(WIDTH-player.getWidth()-1))
-			player.setPositionX(player.getPositionX()+10);
-		}
+		// exit game
+		playerInput();
+		ballSpawn(i);
+		schwierigkeit();
+
+
+
+
+
+
 	}
 
 
 	// render scene
 	@Override
-	public void render(GameContainer gc, Graphics g) throws SlickException {
+	public void render(GameContainer gc, Graphics g){
 
 
 		g.drawImage(background, 0, 0);
 		g.drawString("Score: " + score, 0, 0);
-		g.drawImage(player.getImage(),player.getPositionX(), player.getPositionY());
+		player.render(g);
+		for(Ball ball:balls){
+			ball.render(g);
+		}
 
 
 
+
+	}
+
+	private void playerInput(){
+		if (this.input.isKeyPressed(Input.KEY_ESCAPE)) {
+			System.exit(0);
+		}
+        int playerSpeed = 10;
+        if (this.input.isKeyDown(Input.KEY_LEFT)){
+			player.moveLeft(playerSpeed);
+		}
+		if (this.input.isKeyDown(Input.KEY_RIGHT)){
+			player.moveRight(playerSpeed);
+		}
+	}
+
+	private void ballSpawn(int i) throws SlickException {
+		timeSinceLastSpawn+=i;
+		for (Ball ball:balls){
+			ball.update();
+		}
+		balls.removeIf(ball -> ball.isDestroyed());
+
+		if (balls.size()<maxBalls&&timeSinceLastSpawn>=spawnCooldown){
+			balls.add(new Ball(WIDTH,HEIGHT));
+			timeSinceLastSpawn=0;
+		}
+
+	}
+	private void gameLogic() throws SlickException {
+
+	}
+
+	private void schwierigkeit(){
+		if (score<100)
+				spawnCooldown=1000;
+		if (score>200)
+				spawnCooldown=500;
+		if (score>400){
+			spawnCooldown=100;
+		}
+		if (score>600){
+			spawnCooldown=50;
+		}
+		if (score>=1000){
+			maxBalls=20;
+		}
 	}
 
 

@@ -1,4 +1,5 @@
-import org.newdawn.slick.Color;
+package Aufgabe_7;
+
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;

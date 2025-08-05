@@ -1,3 +1,5 @@
+package Aufgabe_7;
+
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;

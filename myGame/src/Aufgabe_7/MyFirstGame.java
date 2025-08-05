@@ -1,7 +1,4 @@
-/** ---------------------------------------------------------------------------
- * Vorlesung: Programmieren 1
- * Thema: Beispiel für eine GUI mit Slick2D
- * ------------------------------------------------------------------------------* **/
+package Aufgabe_7;
 
 
 import java.util.ArrayList;
@@ -137,6 +134,8 @@ public class MyFirstGame extends BasicGame {
 	}
 
 	private void schwierigkeit(){
+		if(score<0)
+			System.exit(0);
 		if (score<100)
 				spawnCooldown=1000;
 

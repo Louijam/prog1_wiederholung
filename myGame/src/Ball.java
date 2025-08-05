@@ -2,21 +2,25 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Circle;
+import org.newdawn.slick.geom.Rectangle;
 
-import java.lang.reflect.Array;
+
 import java.util.Random;
 
 public class Ball {
-    private int height;
+    private final int height;
     private Color color;
     private int speed;
     private int positionX;
     private int positionY;
-    private int durchmesser=40;
+    private final int durchmesser=40;
 
     private Image image;
 
     private boolean destroyed= false;
+
+    private final Circle hitbox;
 
 
 
@@ -25,8 +29,9 @@ public class Ball {
         this.height = HEIGHT;
         initColor();
         initSpeed();
-        initPos(WIDTH,HEIGHT);
+        initPos(WIDTH);
         initImage();
+        hitbox = new Circle(positionX+((float)durchmesser/2),positionY, (float) durchmesser /2);
     }
 
 
@@ -49,11 +54,11 @@ public class Ball {
         this.color=farben[r.nextInt(farben.length)];
     }
 
-    private void initPos(int WIDTH, int HEIGHT) {
+    private void initPos(int WIDTH) {
 
         Random r=new Random();
-        positionX=durchmesser+r.nextInt(WIDTH)-durchmesser;
-        positionY=0-durchmesser;
+        positionX=r.nextInt(WIDTH-durchmesser);
+        positionY= -durchmesser;
 
 
     }
@@ -66,16 +71,31 @@ public class Ball {
     }
 
 
-    public void update(){
-        positionY+=speed;
+    public void update() {
+        positionY += speed;
+        hitbox.setY(positionY);
 
-        if (positionY>(height+durchmesser))
-            destroyed=true;
+        // nur Bodencheck hier!
+        if (positionY > (height - durchmesser)) {
+            destroy();
+        }
     }
+
+
+
+
+
 
     public void render(Graphics g) {
         g.drawImage(image,positionX,positionY);
 
+    }
+    public boolean hitboxHit(Rectangle hitboxPlayer){
+        return hitboxPlayer.intersects(hitbox);
+    }
+
+    public void destroy(){
+        destroyed=true;
     }
 
 

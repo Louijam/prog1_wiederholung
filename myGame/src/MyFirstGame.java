@@ -8,17 +8,10 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.newdawn.slick.AppGameContainer;
-import org.newdawn.slick.BasicGame;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
-import org.newdawn.slick.Image;
+import org.newdawn.slick.*;
 
 
-
-// class 
+// class
 public class MyFirstGame extends BasicGame {
 
 	static final int WIDTH = 640;
@@ -71,6 +64,7 @@ public class MyFirstGame extends BasicGame {
 		// exit game
 		playerInput();
 		ballSpawn(i);
+		gameLogic();
 		schwierigkeit();
 
 
@@ -87,11 +81,13 @@ public class MyFirstGame extends BasicGame {
 
 
 		g.drawImage(background, 0, 0);
-		g.drawString("Score: " + score, 0, 0);
-		player.render(g);
+
+
 		for(Ball ball:balls){
 			ball.render(g);
 		}
+		player.render(g);
+		g.drawString("Score: " + score, 0, 0);
 
 
 
@@ -102,6 +98,7 @@ public class MyFirstGame extends BasicGame {
 		if (this.input.isKeyPressed(Input.KEY_ESCAPE)) {
 			System.exit(0);
 		}
+
         int playerSpeed = 10;
         if (this.input.isKeyDown(Input.KEY_LEFT)){
 			player.moveLeft(playerSpeed);
@@ -116,7 +113,7 @@ public class MyFirstGame extends BasicGame {
 		for (Ball ball:balls){
 			ball.update();
 		}
-		balls.removeIf(ball -> ball.isDestroyed());
+		balls.removeIf(Ball::isDestroyed);
 
 		if (balls.size()<maxBalls&&timeSinceLastSpawn>=spawnCooldown){
 			balls.add(new Ball(WIDTH,HEIGHT));
@@ -124,13 +121,25 @@ public class MyFirstGame extends BasicGame {
 		}
 
 	}
-	private void gameLogic() throws SlickException {
+	private void gameLogic() {
+		for (Ball ball : balls) {
+			if (ball.isDestroyed()) continue; // skip zerstörte Bälle
 
+			if (ball.hitboxHit(player.getHitbox())) {
+				if (ball.getColor() == Color.red) {
+					score += 90;
+				} else {
+					score -= 100;
+				}
+				ball.destroy();
+			}
+		}
 	}
 
 	private void schwierigkeit(){
 		if (score<100)
 				spawnCooldown=1000;
+
 		if (score>200)
 				spawnCooldown=500;
 		if (score>400){

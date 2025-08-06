@@ -35,6 +35,7 @@ public class Main {
         Bibliothek bib=new Bibliothek();
         Buch b0=new Buch("Eragon 1", "Christopher Paolini");
         Buch b1=new Buch("Eragon 2", "Christopher Paolini");
+        Buch b4=new Buch("Eragon 3", "Christopher Paolini");
         Buch b2=new Buch("Eragon 3", "Christopher Paolini");
         Buch b3=new Buch("Eragon 4", "Christopher Paolini");
 
@@ -42,6 +43,7 @@ public class Main {
         bib.buchHinzufuegen(b1);
         bib.buchHinzufuegen(b2);
         bib.buchHinzufuegen(b3);
+        bib.buchHinzufuegen(b4);
 
         bib.buchAusleihen("Eragon 1");
         bib.buchAusleihen("Eragon 1");
